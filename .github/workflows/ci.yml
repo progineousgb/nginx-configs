@@ -6,7 +6,9 @@ on:
 jobs:
   nginx-t:
     runs-on: ubuntu-latest
+    # Ubuntu's nginx is too old for "http2 on;", so use the upstream image.
+    container: nginx:stable
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y nginx
+      - run: apt-get update && apt-get install -y openssl
       - run: bash test/run.sh
